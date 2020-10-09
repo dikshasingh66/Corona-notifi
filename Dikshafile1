@@ -1,0 +1,21 @@
+#undergonig project
+from plyer import notification
+import requests
+from bs4 import BeautifulSoup
+def notifyMe(title,message):
+    notification.notify(title=title,
+    message=message,
+    app_icon= (r"C:\Users\DIKSHA\Downloads\icon.ico"),
+    timeout=10)
+def getdata(url):
+    r=requests.get(url)
+    return r.text
+if __name__=="__main__":
+    #notifyMe("Hey, Diksha! Corona Update",'yes')
+    myhtml=getdata("https://www.mohfw.gov.in/")
+    soup = BeautifulSoup(myhtml, 'html.parser')
+    #print(soup.prettify())
+    mystr=''
+    for tr in soup.find_all('tbody')[1].find_all('tr'):
+        mystr+=(tr.get_text())
+    print(mystr.split("\n\n"))
